@@ -2,3 +2,7 @@
 	path = extern/godot-cpp
 	url = https://github.com/godotengine/godot-cpp
 	branch = 4.3
+[submodule "extern/ggpo"]
+	path = extern/ggpo
+	url = https://github.com/Shugyousha/ggpo
+	branch = linuxpr
