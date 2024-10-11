@@ -20,5 +20,5 @@ include( ccache )
 
 set( GODOT_CPP_SYSTEM_HEADERS ON CACHE BOOL "" FORCE )
 add_subdirectory( extern/godot-cpp )
-add_subdirectory( server )
 add_subdirectory( extern/ggpo )
+add_subdirectory( server )
