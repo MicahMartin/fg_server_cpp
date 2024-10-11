@@ -8,11 +8,13 @@
 
 using namespace godot;
 
+FGServer *fgServer;
+
 GGPOSession *ggpo;
 GGPOPlayer p1, p2;
 GGPOPlayerHandle player_handles[2];
 GGPOPlayerHandle local_player_handle;
-FGServer *fgServer;
+
 godot::Input *InputServer;
 
 void FGServer::_bind_methods() {}
@@ -26,6 +28,7 @@ void FGServer::enter() {
 }
 
 void FGServer::_process(double delta) {}
+
 void FGServer::_ready() {
   if (Engine::get_singleton()->is_editor_hint()) {
     return;
