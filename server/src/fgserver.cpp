@@ -1,24 +1,35 @@
 #include "fgserver.h"
+#include "ggponet.h"
+#include <filesystem>
+#include <godot_cpp/classes/engine.hpp>
+#include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/core/class_db.hpp>
+#include <godot_cpp/variant/utility_functions.hpp>
 
 using namespace godot;
 
-void FGServer::_bind_methods() {
+GGPOSession *ggpo;
+GGPOPlayer p1, p2;
+GGPOPlayerHandle player_handles[2];
+GGPOPlayerHandle local_player_handle;
+FGServer *fgServer;
+godot::Input *InputServer;
+
+void FGServer::_bind_methods() {}
+
+FGServer::FGServer() { UtilityFunctions::print("engine constructor"); }
+
+FGServer::~FGServer() { UtilityFunctions::print("engine destructor"); }
+
+void FGServer::enter() {
+  UtilityFunctions::print(std::filesystem::current_path().c_str());
 }
 
-FGServer::FGServer() {
-	// Initialize any variables here.
-	time_passed = 0.0;
-}
-
-FGServer::~FGServer() {
-	// Add your cleanup here.
-}
-
-void FGServer::_process(double delta) {
-	time_passed += delta;
-
-	Vector2 new_position = Vector2(10.0 + (10.0 * sin(time_passed * 2.0)), 10.0 + (10.0 * cos(time_passed * 1.5)));
-
-	set_position(new_position);
+void FGServer::_process(double delta) {}
+void FGServer::_ready() {
+  if (Engine::get_singleton()->is_editor_hint()) {
+    return;
+  }
+  InputServer = godot::Input::get_singleton();
+  UtilityFunctions::print("in ready");
 }
