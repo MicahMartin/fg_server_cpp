@@ -1,10 +1,10 @@
 #ifndef _COMMANDCOMPILER_H
 #define _COMMANDCOMPILER_H
 
-#include "CommandScanner.h"
-#include <functional>
 #include <string>
 #include <vector>
+#include <functional>
+#include "CommandScanner.h"
 
 typedef std::function<bool(int, bool)> CommandFunction;
 struct CommandNode {
@@ -25,24 +25,23 @@ struct CommandStringObj {
 class VirtualController;
 class CommandCompiler {
 public:
+
   CommandCompiler();
   ~CommandCompiler();
 
-  void init(const char *path);
-  void compile(const char *inputString, bool clears);
+  void init(const char* path);
+  void compile(const char* inputString, bool clears);
 
   CommandNode compileNode();
   CommandNode compileOneNode();
-  CommandFunction binaryCommand(CommandFunction currentFunc,
-                                CommandTokenType type);
+  CommandFunction binaryCommand(CommandFunction currentFunc, CommandTokenType type);
 
   std::vector<CommandStringObj> commandStrings;
   std::vector<CommandObj> commands;
-  VirtualController *controllerPointer;
-
+  VirtualController* controllerPointer;
 private:
   CommandScanner commandScanner;
-  CommandToken *currentToken;
+  CommandToken* currentToken;
 };
 
 #endif /* _CommandCompiler_h */

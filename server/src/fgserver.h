@@ -1,31 +1,173 @@
-#ifndef FGSERVER_H
-#define FGSERVER_H
+#ifndef _FGSERVER_H
+#define _FGSERVER_H
 
+#include "Camera.h"
+#include "Character.h"
+#include "CollisionBox.h"
+#include "Physics.h"
+#include "Util.h"
+#include "VirtualController.h"
+#include "ggponet.h"
 #include <godot_cpp/classes/node.hpp>
+#include <godot_cpp/godot.hpp>
+#include <godot_cpp/variant/dictionary.hpp>
 
-namespace godot {
+struct GameState {
+  int roundStartCounter;
+  int roundStart;
+  int currentRound;
+  int inSlowDown;
+  int p1RoundsWon;
+  int p2RoundsWon;
+  int roundEnd;
+  int roundWinner;
+  int screenFreeze;
+  int screenFreezeCounter;
+  int screenFreezeLength;
+  int slowDownCounter;
+  int slowMode;
+  int frameCount;
 
-class FGServer : public Node {
+  bool shouldUpdate;
+  bool netPlayState;
+  bool doneSync;
+  // shouldUpdate
+  // stepOnce
+  // screenFreeze
+  // inSlowDown
+  // roundStart
+  // everythingCompiled
+  // roundEnd
+  // slowMode
+  // doneSync
+  // netPlayState
+  // p2RoundsWon
+  // time_passed
+  // localBufferSize
+  // remotePort
+  // localPort
+  // p1RoundsWon
+  // roundStartCounter
+  // currentRound
+  // screenFreezeCounter
+  // currentState
+  // frameCount
+  // netPnum
+  // screenFreezeLength
+  // roundWinner
+  // slowDownCounter
+  // remoteIp
+  // localIp
+  // p1StartPos
+  // p2StartPos
+  // worldWidth
+  // camWidth
+  // camHeight
+  // localBuffer
+  // camera
+  // physics
+  // p1Vc
+  // p2Vc
+  // player1
+  // player2
+
+  CharStateObj player1;
+  CharStateObj player2;
+  CameraStateObj cameraState;
+};
+
+class FGServer : public godot::Node {
   GDCLASS(FGServer, Node)
-
-private:
-  double time_passed;
-
-protected:
-  static void _bind_methods();
 
 public:
   FGServer();
   ~FGServer();
 
   void enter();
-  // void step(int inputs[]);
+  void step(int inputs[]);
 
-  // void _physics_process(double_t delta) override;
-  void _process(double delta) override;
+  godot::Dictionary getGameState();
+  godot::String getModelName(int p_charNum);
+  double getModelScale(int p_charNum);
+
+  void _physics_process(double_t delta) override;
+  void _process(double_t delta) override;
   void _ready() override;
-};
 
-} // namespace godot
+  // GGPO
+  int getPort();
+  std::string getIp();
+
+  bool shouldUpdate = true;
+  bool stepOnce = false;
+  bool netPlayState, doneSync, slowMode, everythingCompiled, inSlowDown,
+      roundEnd, roundStart, screenFreeze = false;
+
+  int frameCount, currentState, screenFreezeLength, slowDownCounter,
+      roundWinner, screenFreezeCounter, currentRound, roundStartCounter,
+      p1RoundsWon, p2RoundsWon, time_passed, localBufferSize, remotePort,
+      localPort, netPnum = 0;
+
+  std::string remoteIp, localIp = "";
+
+  int p1StartPos = 1700 * COORDINATE_SCALE;
+  int p2StartPos = 2200 * COORDINATE_SCALE;
+
+  int worldWidth = 3840 * COORDINATE_SCALE;
+  int camWidth = 1280 * COORDINATE_SCALE;
+  int camHeight = 720 * COORDINATE_SCALE;
+
+  unsigned char *localBuffer = 0;
+  Camera camera;
+  Physics physics;
+  VirtualController p1Vc;
+  VirtualController p2Vc;
+  Character player1 = Character(std::make_pair(p1StartPos, 0), 1);
+  Character player2 = Character(std::make_pair(p2StartPos, 0), 2);
+
+protected:
+  static void _bind_methods();
+
+private:
+  int readGodotInputs(int pNum);
+  void readGodotTrainingInput();
+
+  void checkTriggerCollisions();
+  void checkPushCollisions();
+  void checkThrowCollisions();
+  void checkHitCollisions();
+  void checkEntityHitCollisions();
+  void checkBounds();
+  void checkHealth();
+  // bool checkBlock(int blockType, Character* player);
+  void updateFaceRight();
+  void handleRoundStart();
+  void restartRound();
+  void checkThrowTechs();
+  void updateVisuals();
+  void updateCamera();
+
+  void checkCorner(Character *player);
+  void checkHitstop(Character *player);
+  void checkEntityHitstop(Character *player);
+
+  HitResult checkHitboxAgainstHurtbox(Character *hitter, Character *hurter);
+  int checkProximityAgainst(Character *hitter, Character *hurter);
+
+  HitResult checkEntityHitAgainst(Character *thrower, Character *throwee);
+  ThrowResult checkThrowAgainst(Character *thrower, Character *throwee);
+  void handleSameFrameThrowTech(SpecialState techState);
+  int checkProjectileCollisions(Character *player1, Character *player2);
+
+  // Training mode functions
+  void saveState();
+  void loadState();
+  void pauseState();
+  void unpauseState();
+  void stepState();
+
+  // GGPO
+  void ggpoInit();
+};
 
 #endif

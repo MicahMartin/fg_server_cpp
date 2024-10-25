@@ -135,8 +135,7 @@ void VirtualController::update(uint16_t input) {
 
 void VirtualController::initCommandCompiler(const char *path) {
   commandCompiler.controllerPointer = this;
-  commandCompiler.init("/Users/martin/dev/godot_projects/template_test/"
-                       "GDExtensionTemplate/src/commands.json");
+  commandCompiler.init("./data/commands.json");
 }
 
 bool VirtualController::wasPressed(Input input, bool strict, int index,
