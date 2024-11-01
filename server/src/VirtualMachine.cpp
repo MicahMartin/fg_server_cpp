@@ -1,6 +1,7 @@
 #include "VirtualMachine.h"
 #include "Character.h"
 #include <cstdarg>
+#include <godot_cpp/variant/string.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 
 VirtualMachine::VirtualMachine() {}

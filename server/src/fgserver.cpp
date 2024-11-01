@@ -755,6 +755,7 @@ godot::Dictionary FGServer::getGameState() {
 
   state["char1FireballPosX"] = player1.entityList[0].position.first;
   state["char1FireballPosY"] = player1.entityList[0].position.second;
+  state["char1FireballActive"] = player1.entityList[0].active;
   godot::Array p1FireballBoxes;
   for (auto collisionBox : player1.entityList[0].currentState->collisionBoxes) {
     godot::Dictionary cbDict;
