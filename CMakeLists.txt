@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.19)
 message(STATUS "Using CMake ${CMAKE_VERSION}")
 
 # Project setup
-project(fg_server
+project(fgserver
     LANGUAGES CXX
     VERSION 0.2.0
 )
@@ -48,9 +48,6 @@ set_target_properties(${PROJECT_NAME}
         RUNTIME_OUTPUT_DIRECTORY "${BUILD_OUTPUT_DIR}/${LIB_DIR}"
         LIBRARY_OUTPUT_DIRECTORY "${BUILD_OUTPUT_DIR}/${LIB_DIR}"
 )
-
-# Include compiler warnings configuration
-include(CompilerWarnings)
 
 # Add server subdirectory
 add_subdirectory(server)

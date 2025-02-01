@@ -1,8 +1,0 @@
-[configuration]
-entry_symbol = "fgserver_library_init"
-compatibility_minimum = 4.1
-
-[libraries]
-linux.release.x86_64 = "lib/Linux-x86_64/libfg_server.so"
-macos.release = "lib/Darwin-universal/libfg_server.dylib"
-windows.release.x86_64 = "lib/Windows-AMD64/fg_server.dll"
