@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.19)
 message(STATUS "Using CMake ${CMAKE_VERSION}")
 
 # Project setup
-project(fgserver
+project(fg_server
     LANGUAGES CXX
     VERSION 0.2.0
 )
