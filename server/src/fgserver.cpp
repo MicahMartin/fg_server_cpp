@@ -1,8 +1,6 @@
 #include "fgserver.h"
 #include "Util.h"
 #include "ggponet.h"
-#include <bitset>
-#include <chrono>
 #include <cstdlib>
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/input.hpp>
@@ -38,6 +36,7 @@ FGServer::~FGServer() { godot::UtilityFunctions::print("engine destructor"); }
 void FGServer::enter() {
   godot::UtilityFunctions::print(std::filesystem::current_path().c_str());
   shouldUpdate = true;
+
   fgServer = this;
   characters[0] = &player1;
   characters[1] = &player2;
@@ -80,6 +79,7 @@ void FGServer::_ready() {
   if (godot::Engine::get_singleton()->is_editor_hint()) {
     return;
   }
+
   InputServer = godot::Input::get_singleton();
   godot::UtilityFunctions::print("in ready");
 
@@ -107,6 +107,7 @@ void FGServer::_ready() {
       "p1:", _p1Name.c_str(), " p2:", _p2Name.c_str(), " netPnum :", _netPnum,
       " isNetPlay:", _isNetPlay, " localPort:", _localPort,
       " remotePort:", _remotePort, " remoteIp:", _remoteIp.c_str());
+
   enter();
 }
 
