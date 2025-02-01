@@ -81,7 +81,7 @@ void FGServer::_ready() {
   }
 
   InputServer = godot::Input::get_singleton();
-  godot::UtilityFunctions::print("in ready");
+  godot::UtilityFunctions::print("in ready, the new ready!");
 
   bool _isNetPlay = this->get_parent()->get_meta("isNetPlay");
   netPlayState = _isNetPlay;
