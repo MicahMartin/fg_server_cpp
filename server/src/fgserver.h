@@ -31,45 +31,6 @@ struct GameState {
   bool shouldUpdate;
   bool netPlayState;
   bool doneSync;
-  // shouldUpdate
-  // stepOnce
-  // screenFreeze
-  // inSlowDown
-  // roundStart
-  // everythingCompiled
-  // roundEnd
-  // slowMode
-  // doneSync
-  // netPlayState
-  // p2RoundsWon
-  // time_passed
-  // localBufferSize
-  // remotePort
-  // localPort
-  // p1RoundsWon
-  // roundStartCounter
-  // currentRound
-  // screenFreezeCounter
-  // currentState
-  // frameCount
-  // netPnum
-  // screenFreezeLength
-  // roundWinner
-  // slowDownCounter
-  // remoteIp
-  // localIp
-  // p1StartPos
-  // p2StartPos
-  // worldWidth
-  // camWidth
-  // camHeight
-  // localBuffer
-  // camera
-  // physics
-  // p1Vc
-  // p2Vc
-  // player1
-  // player2
 
   CharStateObj player1;
   CharStateObj player2;

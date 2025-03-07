@@ -205,9 +205,6 @@ void FGServer::_physics_process(double delta) {
     inputs[1] = readGodotInputs(2);
     readGodotTrainingInput();
   }
-#if defined(SYNC_TEST)
-  input = rand(); // test: use random inputs to demonstrate sync testing
-#endif
 
   if (netPlayState) {
     int disconnectFlags;
@@ -250,12 +247,13 @@ void FGServer::_bind_methods() {
 void FGServer::step(int inputs[]) {
   frameCount++;
 
+  // Handle Input
   p1Vc.update(inputs[0]);
   p2Vc.update(inputs[1]);
 
-  // Handle Input
+  // Handle global state
+  handleRoundStart();
   if (!slowMode && !screenFreeze) {
-    handleRoundStart();
 
     physics.checkCorner(&player1, worldWidth);
     physics.checkCorner(&player2, worldWidth);
@@ -380,6 +378,7 @@ void FGServer::step(int inputs[]) {
       screenFreeze = false;
     }
   }
+
   updateVisuals();
   if (netPlayState) {
     ggpo_advance_frame(ggpo);
